@@ -54,9 +54,22 @@ return {
         },
         footer = function()
           local stats = require("lazy").stats()
-          local date = os.date "%Y-%m-%d ⁃ %H:%M"
-          return { date .. " ⁃ " .. stats.loaded .. "/" .. stats.count }
-        end,
+          local padding = 8  -- set horizontal padding for the box
+          
+          -- Construct the dynamic content
+          local content = os.date "%H:%M --- %Y-%m-%d" .. " --- " .. stats.loaded .. "/" .. stats.count
+
+          -- Calculate the width based on the content length
+          local width = string.len(content) + padding  -- Add padding for the box
+
+          -- Create top and bottom border dynamically based on width
+          local border = "╭" .. string.rep("─", width) .. "╮"
+          local footer_line = "│" .. string.rep(" ", padding / 2) .. content .. string.rep(" ", padding / 2) .. "│"
+          local bottom_border = "╰" .. string.rep("─", width) .. "╯"
+
+          return { "", "", border, footer_line, bottom_border }
+        end
+
       },
     }
 
