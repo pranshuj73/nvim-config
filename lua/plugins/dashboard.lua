@@ -55,7 +55,7 @@ return {
         footer = function()
           local stats = require("lazy").stats()
           local padding = 8  -- set horizontal padding for the box
-          
+
           -- Construct the dynamic content
           local content = os.date "%H:%M --- %Y-%m-%d" .. " --- " .. stats.loaded .. "/" .. stats.count
 
