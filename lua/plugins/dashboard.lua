@@ -45,11 +45,11 @@ return {
         header = vim.split(logo, "\n"),
         -- stylua: ignore
         center = {
-          { action = "Telescope find_files",                           desc = " Find File",       icon = " ", key = "f" },
           { action = "ene | startinsert",                              desc = " New File",        icon = " ", key = "n" },
+          { action = "Telescope find_files",                           desc = " Find File",       icon = " ", key = "f" },
           { action = "Telescope live_grep",                            desc = " Find Text",       icon = " ", key = "g" },
           { action = "Telescope oldfiles",                             desc = " Recents",         icon = " ", key = "r" },
-          { action = "Lazy",                                           desc = " Lazy",            icon = "󰒲 ", key = "l" },
+          { action = "Neotree position=float",                         desc = " Neotree",         icon = " ", key = "v" },
           { action = function() vim.api.nvim_input("<cmd>qa<cr>") end, desc = " Quit",            icon = " ", key = "q" },
         },
         footer = function()
@@ -78,18 +78,17 @@ return {
       button.key_format = "  %s"
     end
 
-    -- open dashboard after closing lazy
-    if vim.o.filetype == "lazy" then
-      vim.api.nvim_create_autocmd("WinClosed", {
-        pattern = tostring(vim.api.nvim_get_current_win()),
-        once = true,
-        callback = function()
+    -- open dashboard after closing neo-tree
+    vim.api.nvim_create_autocmd("WinClosed", {
+      callback = function(event)
+        local buftype = vim.api.nvim_get_option_value("filetype", { buf = event.buf })
+        if buftype == "neo-tree" then
           vim.schedule(function()
             vim.api.nvim_exec_autocmds("UIEnter", { group = "dashboard" })
           end)
-        end,
-      })
-    end
+        end
+      end,
+    })
 
     return opts
   end,
