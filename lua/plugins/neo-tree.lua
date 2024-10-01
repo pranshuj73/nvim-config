@@ -8,6 +8,6 @@ return {
     "3rd/image.nvim", -- IMAGE SUPPORT
   },
   config = function ()
-    vim.keymap.set('n', '<C-n>', ':Neotree filesystem reveal right toggle<CR>', {})
+    vim.keymap.set('n', '<C-n>', ':Neotree filesystem reveal right<CR>', {})
   end
 }
